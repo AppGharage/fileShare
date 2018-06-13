@@ -1,4 +1,4 @@
-const cacheName = 'pwa-starter-kit';
+const cacheName = 'fileShare';
 const cacheVersion = `${cacheName}::1.0.0`;
 
 const cachedFiles = [
