@@ -1,9 +1,11 @@
 const cacheName = 'fileShare';
-const cacheVersion = `${cacheName}::1.0.0`;
+const cacheVersion = `${cacheName}::1.1.0`;
 
 const cachedFiles = [
     '/',
-    '/css/styles.css'
+    '/css/styles.css',
+    'images/bg.png',
+    'js/custom-file-input.j'
 ];
 
 const networkFiles = [

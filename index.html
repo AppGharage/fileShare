@@ -10,86 +10,57 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 
-    <style>
-        body{
-        font-family: 'Arimo', sans-serif;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background: #a73737; 
-        background: -webkit-linear-gradient(to right, #7a2828, #a73737); 
-        background: linear-gradient(to right, #7a2828, #a73737);
-    }
-    .the-container{
-        margin-top: 100px;
-    }
-    .main{
-        background: #ADA996;  
-        background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); 
-        background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
-        padding-top: 50px; 
-        padding-bottom: 50px;
-        opacity: 1;
-    }
-    button{
-        width: 100px;
-        height: 50px;
-        border-top-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        border: 0px;
-        background-color: #a73737;
-        color: white;
-    }
-    .icon{
-        width: 25px;
-        font-size: 20px;
-    }
-    </style>
 </head>
 
 <body>
 
+<div class="container">
+    <div class="hero-text">
 
-<main>
-    <div class="the-container card text-center">
-        <div class="main card-body">
-            <h1>WELCOME TO FILE.UPLOAD</h1>
-            <p>Ephemeral file sharing</p> 
-           <p>Convenient, anonymous and secure</p> 
-            <br><br><br>
+        <h1 style="font-size: 50px;">fileShare</h1>
+        <p style="font-size: 25px;">Upload and share your files easily</p>
 
-            <b>Upload Files Below</b>
-            <br><br>
+        <br>
 
-            <input type="file" name="fileToUpload" id="fileToUpload"  accept=".jpg, .jpeg, .png" class="upload">
-            <button class="upload" id="upload">
-                <ion-icon class="icon" name="ios-cloud-upload"></ion-icon>
-                <b>Upload</b>
-            </button>
-
-            <div id="info"></div>
-
-            <br><br><br>
-            Simply upload a file, share the link, and after it is downloaded, the file is completely deleted.
-            <br>
-            For added security, set an expiration on the file and it is deleted within a certain amount of time,
-            <br>
-            even if it was never downloaded.
-            <br><br>
-            All files are encrypted when stored on our servers.
-
+        <div class="box">
+            <input type="file" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+            <label for="file-1"><span>Choose a file&hellip;</span></label>
         </div>
-        <p>Oh hey. You are <span class="connectivity-status">online</span>.</p>
 
+        <button style="font-size:15px;border-radius: 5px;" id="upload">Upload
+            <i class="fa fa-upload" style="font-size:15px;color:#F36747"></i></button>
+        <br>
+
+        <div class="row">
+            
+            <span id ="status" style="font-size:12px"></span>
+
+            <div class="input-group mb-3 ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                            <button style="font-size:12px;border-radius: 5px;" id="copy">
+                                Copy Link
+                            </button>
+                    </span>
+                </div>
+
+                <input type="text" class="form-control" id="info" style="border-radius: 5px;"
+                    aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+            </div>
+
+            <div class="col-sm-4">
+                    <span class="connectivity-status" style="font-size:12px"></span>
+            </div>
+        </div>
     </div>
-
-</main>
-
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
-
+<script src="js/custom-file-input.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () =>
@@ -98,56 +69,68 @@ if ('serviceWorker' in navigator) {
 }
 
 window.addEventListener('online', function () {
-    document.querySelector('.connectivity-status').innerText = 'online';
+    document.querySelector('.connectivity-status').innerHTML = '<b>online<b>';
 })
 
 window.addEventListener('offline', function () {
     document.querySelector('.connectivity-status').innerText = 'offline';
 });
 
+$('#copy').click(function(event) {
+    //Prevent Page from refreshing
+    event.preventDefault();
+
+  var copyText = $('#info');
+  copyText.select();
+  document.execCommand("copy");
+  
+});
+
+
 //Listening For a CLick Event on the Convert Button
 $('#upload').click(function(event) {
-        //Prevent Page from refreshing
-        event.preventDefault();
+    //Prevent Page from refreshing
+    event.preventDefault();
 
-        //Get File from Input
-        const fileToUpload = $('#fileToUpload')[0].files[0];   
-        
-        var data = new FormData();
-
-        if (fileToUpload.length == 0) {
-            $('#info').html('<p>No FIle Selected</p>');
-        } 
-
-        //console.log(fileToUpload);
-        data.append('file', fileToUpload);
+    //Get File from Input
+    const fileToUpload = $('#file-1')[0].files[0];   
     
-        //File Upload API
-        const baseURI = "https://file.io";
 
-        //Making An Ajax Request to the API
-        $.ajax({
-            url: baseURI,
-            type: 'POST',
-            contentType: false,
-            processData:false,
-            data: data,
-            error: function() {
-                $('#info').html('<p>An error has occurred</p>');
-            },
-            dataType: 'json',
-            success: function(response) {
-                 //console.log(response);
-                if (response.success) {
-                    $('#info').html(`<p>Yaay! You can share the link => ${response.link} . 
-                    It expires in ${response.expiry}</p>`);
-                }
+    if (fileToUpload.length) {
+        $('#status').html('<p>No FIle Selected</p>');
+    } else{
+        $('#status').html('<p>Please Wait ..</p>');
+    }
 
+    
+    var data = new FormData();
+
+    data.append('file', fileToUpload);
+
+    //File Upload API
+    const baseURI = "https://file.io";
+
+    //Making An Ajax Request to the API
+    $.ajax({
+        url: baseURI,
+        type: 'POST',
+        contentType: false,
+        processData:false,
+        data: data,
+        error: function() {
+            $('#info').html('<p>An error has occurred</p>');
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                $('#info').val(response.link);
+                $('#status').html('Awesome! You can copy and share the link below');
             }
 
-        });
-    });
+        }
 
+    });
+});
 </script>
 </body>
 </html>
