@@ -1,5 +1,5 @@
 {
-    "manifest_version": 1.1,
+    "manifest_version": 1.2,
     "version": "1.0.0",
     "short_name": "fileShare",
     "name": "fileShare",
@@ -12,8 +12,8 @@
         }
     ],
     "start_url": "/",
-    "theme_color": "#F36747",
-    "background_color": "#F36747",
+    "theme_color": "#d3394c",
+    "background_color": "#d3394c",
     "display": "standalone",
     "orientation": "portrait"
 }

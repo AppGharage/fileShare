@@ -1,16 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Comfortaa:700');
 
-*{
-    margin:0;
-    padding: 0;
-}
 html {
     height: 100%;
     background-image: url("../images/bg.png");
-    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    background-color: #F36747;
 }
 
 .hero-text {
@@ -20,7 +16,7 @@ html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: #fff;
 }
 
 button {
