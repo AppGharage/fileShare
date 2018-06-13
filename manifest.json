@@ -1,6 +1,9 @@
 {
-    "short_name": "PWA App",
-    "name": "Progressive Web Application Starter Kit",
+    "manifest_version": 1.1,
+    "version": "1.0.0",
+    "short_name": "fileShare",
+    "name": "fileShare",
+    "description": "Share Files Easily with Friends, Family & Co-Workers",
     "icons": [
         {
             "src": "images/icon@2x.png",
@@ -8,8 +11,9 @@
             "sizes": "512x512"
         }
     ],
-    "start_url": "https://pwa-starter-kit-93cf2.firebaseapp.com/",
-    "background_color": "#FFFFFF",
-    "theme_color": "#3E82F7",
-    "display": "minimal-ui"
+    "start_url": "/",
+    "theme_color": "#2196f3",
+    "background_color": "#2196f3",
+    "display": "standalone",
+    "orientation": "portrait"
 }
